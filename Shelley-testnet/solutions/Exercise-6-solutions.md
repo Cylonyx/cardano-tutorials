@@ -409,7 +409,8 @@ GitHub repositories.
             --pool-margin 0.20 \
             --pool-reward-account-verification-key-file stake2.vkey \
             --pool-owner-stake-verification-key-file stake1.vkey \
-            --out-file pool1.cert
+            --out-file pool1.cert \
+            --testnet-magic 42
 
     Here we have additionally (although this was not required) changed the reward account to `stake2.vkey`,
     so the rewards from both our pools will go to the same stake key `stake2.vkey` from now on.
@@ -417,7 +418,7 @@ GitHub repositories.
     We have to submit the new certificate to the blockchain:
 
         cardano-cli shelley query utxo \
-            --address $(cat pay1) \
+            --address $(cat pay1.addr) \
             --testnet-magic 42
 
                     TxHash                  TxIx        Lovelace
@@ -442,7 +443,7 @@ GitHub repositories.
 
         cardano-cli shelley transaction build-raw \
             --tx-in 0fe697...#1 \
-            --tx-out $(cat pay1)+948998643657 \
+            --tx-out $(cat pay1.addr)+948998643657 \
             --ttl 460000 \
             --fee 181385 \
             --out-file tx.raw \
